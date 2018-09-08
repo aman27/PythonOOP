@@ -37,6 +37,18 @@ class Employee(object):
 			return False
 		return True	
 
+	def __repr__(self):
+		return "Employee('{}', '{}', {})".format(self.first, self.last, self.pay)	
+
+	def __str__(self):
+		return "{} - {}".format(self.fullname(), self.email)
+
+	def __add__(self, other):
+		return self.pay + other.pay
+
+	def __len__(self):
+		return len(self.fullname())		
+
 class Developer(Employee):
 	raise_amt = 1.10
 	def __init__(self, first, last, pay, prog_lang):
@@ -170,6 +182,14 @@ print(issubclass(Developer, Employee))
 print(issubclass(Manager, Employee))
 print(issubclass(Developer, Manager))
 
+print(emp_1)
 
+print(repr(emp_1))
+print(str(emp_1))
 
+print(emp_1.__repr__())
+print(emp_1.__str__())
 
+print(emp_1 + emp_2)
+
+print(len(emp_1))
