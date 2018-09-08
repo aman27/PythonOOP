@@ -1,6 +1,7 @@
 #python object oriented program
 
-class Employee:
+#class Employee():  #python version 3 compatoble
+class Employee(object):
 
 	num_of_emps = 0
 
@@ -36,6 +37,36 @@ class Employee:
 			return False
 		return True	
 
+class Developer(Employee):
+	raise_amt = 1.10
+	def __init__(self, first, last, pay, prog_lang):
+		#super().__init__(first, last, pay).  #python version 3 compatoble
+		super(Developer, self).__init__(first, last, pay)
+		self.prog_lang = prog_lang
+
+class Manager(Employee):
+	
+	def __init__(self, first, last, pay, employees = None):
+		#super().__init__(first, last, pay)  #python version 3 compatoble
+		super(Manager, self).__init__(first, last, pay)
+		if employees == None:
+			self.employees = []
+		else:
+			self.employees = employees		
+
+	def add_emp(self, emp):
+		if emp not in self.employees:
+			self.employees.append(emp)
+
+	def remove_emp(self, emp):
+		if emp in self.employees:
+			self.employees.remove(emp)		
+
+
+	def print_emp(self):
+		for emp in self.employees:
+			print ('-->', emp.fullname())		
+			
 print(Employee.num_of_emps)		
 
 emp_1 = Employee('Aman', 'Yadav', 50000)
@@ -109,10 +140,36 @@ new_emp_1 = Employee.from_string(emp_str_1)
 print(new_emp_1.email)
 print(new_emp_1.pay)
 
-
 import datetime
 my_date = datetime.date(2016, 7, 10)
 
-
-
 print(Employee.is_workday(my_date))
+
+print(help(Developer))
+
+dev_1 = Developer('Amani', 'Yadav', 50000, 'python')
+dev_2 = Developer('Test', 'Employee', 70000, 'java')
+
+print(dev_1.pay)
+dev_1.apply_raise()
+print(dev_1.pay)
+
+print(dev_1.prog_lang)
+
+mgr_1 = Manager('Amit', 'Garg', 90000, [dev_1])
+
+mgr_1.add_emp(dev_2)
+mgr_1.remove_emp(dev_1)
+
+mgr_1.print_emp()
+
+print(isinstance(mgr_1, Manager))
+print(isinstance(mgr_1, Employee))
+print(isinstance(mgr_1, Developer))
+print(issubclass(Developer, Employee))
+print(issubclass(Manager, Employee))
+print(issubclass(Developer, Manager))
+
+
+
+
